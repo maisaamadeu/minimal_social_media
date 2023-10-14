@@ -1,0 +1,1 @@
+require("./functions/auth.js");

@@ -1,0 +1,10 @@
+{
+  "applications": {
+    "_default": {
+      "link": "minimal-social-media"
+    },
+    "minimal-social-media": {
+      "applicationId": "RYXpnhAA5kqIhpsi6OhsqvK2fsUGv1qJdVaU6nNg"
+    }
+  }
+}
