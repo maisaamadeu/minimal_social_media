@@ -1,3 +1,4 @@
+import 'package:dio/dio.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:minimal_social_media/shared/services/auth_service.dart';
 
@@ -5,7 +6,7 @@ void main() {
   late Auth auth;
 
   setUp(() {
-    auth = Auth();
+    auth = Auth(dio: Dio());
   });
 
   group(

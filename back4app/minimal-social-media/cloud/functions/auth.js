@@ -14,6 +14,20 @@ Parse.Cloud.define('get-usernames', async (request) => {
     })
 });
 
+Parse.Cloud.define('get-emails', async (request) => {
+    const queryEmails = new Parse.Query(User);
+    queryEmails.select('email');
+    const resultEmails = await queryEmails.find({ useMasterKey: true });
+
+    return resultEmails.map(function (e) {
+        e = e.toJSON();
+
+        return {
+            email: e.email
+        }
+    })
+});
+
 Parse.Cloud.define("signup", async (request) => {
     if (request.params.username == null) throw "Por favor insira um nome de usuário válido";
     if (request.params.email == null) throw "Por favor insira um endereço de email válido";

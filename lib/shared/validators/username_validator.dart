@@ -1,7 +1,8 @@
-class UsernameValidator {
-  String? validate({String? username}) {
-    List<String> usernamesList = ['maisa', 'ana'];
+import 'package:dio/dio.dart';
+import 'package:minimal_social_media/shared/repositories/users_repository.dart';
 
+class UsernameValidator {
+  Future<String?> validate({String? username}) async {
     if (username == null || username == '') {
       return 'O nome de usuário é obrigatório';
     }
@@ -10,7 +11,12 @@ class UsernameValidator {
       return 'O nome de usuário tem que ter no mínimo 3 caracteres';
     }
 
-    for (var usernameInList in usernamesList) {
+    List<String>? usernames = await UsersRepository(dio: Dio()).getUsernames();
+    if (usernames == null) {
+      return 'Ocorreu um erro ao buscar os nomes de usuários no banco de dados';
+    }
+
+    for (var usernameInList in usernames) {
       if (usernameInList == username) {
         return 'O nome de usuário já está sendo utilizado';
       }

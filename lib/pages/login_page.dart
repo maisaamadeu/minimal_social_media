@@ -1,4 +1,6 @@
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:minimal_social_media/pages/home_page.dart';
 import 'package:minimal_social_media/pages/register_page.dart';
 import 'package:minimal_social_media/shared/services/auth_service.dart';
 import 'package:minimal_social_media/shared/widgets/my_elevated_button.dart';
@@ -16,7 +18,7 @@ class _LoginPageState extends State<LoginPage> {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
 
-  final Auth _auth = Auth();
+  final Auth _auth = Auth(dio: Dio());
 
   @override
   void dispose() {
@@ -86,16 +88,22 @@ class _LoginPageState extends State<LoginPage> {
                 height: 25,
               ),
               MyElevatedButton(
-                onPressed: () {
-                  String? result = _auth.login(
+                onPressed: () async {
+                  String? result = await _auth.login(
                     email: _emailController.text,
                     password: _passwordController.text,
                   );
 
-                  if (result != null) {
-                    myErrorSnackBar(context, result);
-                  } else {
-                    // TODO: REALIZAR O LOGIN
+                  if (context.mounted) {
+                    if (result != null) {
+                      myErrorSnackBar(context, result);
+                    } else {
+                      Navigator.of(context).pushAndRemoveUntil(
+                          MaterialPageRoute(
+                            builder: (context) => const HomePage(),
+                          ),
+                          (route) => false);
+                    }
                   }
                 },
                 backgroundColor: colorScheme.primary,
@@ -108,7 +116,7 @@ class _LoginPageState extends State<LoginPage> {
               GestureDetector(
                 onTap: () => Navigator.of(context).pushAndRemoveUntil(
                   MaterialPageRoute(
-                    builder: (context) => RegisterPage(),
+                    builder: (context) => const RegisterPage(),
                   ),
                   (route) => false,
                 ),

@@ -1,4 +1,6 @@
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:minimal_social_media/pages/home_page.dart';
 import 'package:minimal_social_media/pages/login_page.dart';
 import 'package:minimal_social_media/shared/services/auth_service.dart';
 import 'package:minimal_social_media/shared/widgets/my_elevated_button.dart';
@@ -19,7 +21,7 @@ class _RegisterPageState extends State<RegisterPage> {
   final TextEditingController _confirmPasswordController =
       TextEditingController();
 
-  final Auth _auth = Auth();
+  final Auth _auth = Auth(dio: Dio());
 
   @override
   void dispose() {
@@ -98,18 +100,24 @@ class _RegisterPageState extends State<RegisterPage> {
                     height: 25,
                   ),
                   MyElevatedButton(
-                    onPressed: () {
-                      String? result = _auth.register(
+                    onPressed: () async {
+                      String? result = await _auth.register(
                         username: _usernameController.text,
                         email: _emailController.text,
                         password: _passwordController.text,
                         confirmPassword: _confirmPasswordController.text,
                       );
 
-                      if (result != null) {
-                        myErrorSnackBar(context, result);
-                      } else {
-                        // TODO: REALIZAR O CADASTRO E FAZER O LOGIN
+                      if (context.mounted) {
+                        if (result != null) {
+                          myErrorSnackBar(context, result);
+                        } else {
+                          Navigator.of(context).pushAndRemoveUntil(
+                              MaterialPageRoute(
+                                builder: (context) => const HomePage(),
+                              ),
+                              (route) => false);
+                        }
                       }
                     },
                     backgroundColor: colorScheme.primary,
@@ -122,7 +130,7 @@ class _RegisterPageState extends State<RegisterPage> {
                   GestureDetector(
                     onTap: () => Navigator.of(context).pushAndRemoveUntil(
                       MaterialPageRoute(
-                        builder: (context) => LoginPage(),
+                        builder: (context) => const LoginPage(),
                       ),
                       (route) => false,
                     ),

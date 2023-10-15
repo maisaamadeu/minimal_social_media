@@ -13,32 +13,51 @@ void main() {
     () {
       test(
         'deve retornar uma mensagem de erro caso o e-mail seja nulo',
-        () {
-          final result = emailValidator.validate();
+        () async {
+          final result = await emailValidator.validate();
           expect(result, 'O e-mail é obrigatório');
         },
       );
 
       test(
         'deve retornar uma mensagem de erro caso o e-mail seja vazio',
-        () {
-          final result = emailValidator.validate(email: '');
+        () async {
+          final result = await emailValidator.validate(email: '');
           expect(result, 'O e-mail é obrigatório');
         },
       );
 
       test(
         'deve retornar uma mensagem de erro caso o e-mail seja inválido',
-        () {
-          final result = emailValidator.validate(email: 'maisa');
+        () async {
+          final result = await emailValidator.validate(email: 'maisa');
           expect(result, 'O e-mail é inválido');
         },
       );
 
       test(
+        'deve retornar uma mensagem de erro caso a lista de e-mails seja nula',
+        () async {
+          final result = await emailValidator.validate(email: 'maisa');
+          expect(
+              result, 'Ocorreu um erro ao buscar os emails no banco de dados');
+        },
+      );
+
+      test(
+        'deve retornar uma mensagem de erro caso o email ja esteja em uso',
+        () async {
+          final result =
+              await emailValidator.validate(email: 'maisa@gmail.com');
+          expect(result, 'O email já está sendo utilizado');
+        },
+      );
+
+      test(
         'deve retornar nulo caso o e-mail seja válido',
-        () {
-          final result = emailValidator.validate(email: 'maisa@gmail.com');
+        () async {
+          final result =
+              await emailValidator.validate(email: 'maisa@gmail.com');
           expect(result, isNull);
         },
       );
