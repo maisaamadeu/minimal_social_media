@@ -1,9 +1,9 @@
 import 'package:dio/dio.dart';
-import 'package:minimal_social_media/shared/private/back_4_app_headers.dart';
-import 'package:minimal_social_media/shared/validators/confirm_password_validator.dart';
-import 'package:minimal_social_media/shared/validators/email_validator.dart';
-import 'package:minimal_social_media/shared/validators/password_validator.dart';
-import 'package:minimal_social_media/shared/validators/username_validator.dart';
+import 'package:minimal_social_media/app/shared/private/back_4_app_headers.dart';
+import 'package:minimal_social_media/app/shared/validators/confirm_password_validator.dart';
+import 'package:minimal_social_media/app/shared/validators/email_validator.dart';
+import 'package:minimal_social_media/app/shared/validators/password_validator.dart';
+import 'package:minimal_social_media/app/shared/validators/username_validator.dart';
 
 class Auth {
   final Dio dio;

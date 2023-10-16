@@ -1,5 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:minimal_social_media/shared/validators/email_validator.dart';
+import 'package:minimal_social_media/app/shared/validators/email_validator.dart';
 
 void main() {
   late EmailValidator emailValidator;

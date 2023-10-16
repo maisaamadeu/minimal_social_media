@@ -1,11 +1,11 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
-import 'package:minimal_social_media/pages/home_page.dart';
-import 'package:minimal_social_media/pages/register_page.dart';
-import 'package:minimal_social_media/shared/services/auth_service.dart';
-import 'package:minimal_social_media/shared/widgets/my_elevated_button.dart';
-import 'package:minimal_social_media/shared/widgets/my_error_snack_bar.dart';
-import 'package:minimal_social_media/shared/widgets/my_text_form_field.dart';
+import 'package:minimal_social_media/app/pages/home_page.dart';
+import 'package:minimal_social_media/app/pages/register_page.dart';
+import 'package:minimal_social_media/app/shared/services/auth_service.dart';
+import 'package:minimal_social_media/app/shared/widgets/my_elevated_button.dart';
+import 'package:minimal_social_media/app/shared/widgets/my_error_snack_bar.dart';
+import 'package:minimal_social_media/app/shared/widgets/my_text_form_field.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});

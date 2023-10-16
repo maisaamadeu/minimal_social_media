@@ -44,5 +44,5 @@ app.*.map.json
 /android/app/release
 
 /back4app/
-/lib/shared/private 
 back4app/minimal-social-media/cloud/functions/auth.js
+/lib/app/shared/private

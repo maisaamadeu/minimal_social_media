@@ -1,5 +1,5 @@
 import 'package:dio/dio.dart';
-import 'package:minimal_social_media/shared/private/back_4_app_headers.dart';
+import 'package:minimal_social_media/app/shared/private/back_4_app_headers.dart';
 
 class UsersRepository {
   final Dio dio;

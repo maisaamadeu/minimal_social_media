@@ -1,5 +1,5 @@
 import 'package:dio/dio.dart';
-import 'package:minimal_social_media/shared/repositories/users_repository.dart';
+import 'package:minimal_social_media/app/shared/repositories/users_repository.dart';
 
 class EmailValidator {
   Future<String?> validate({String? email, bool? login}) async {
