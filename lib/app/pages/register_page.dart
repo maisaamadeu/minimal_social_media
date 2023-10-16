@@ -114,7 +114,7 @@ class _RegisterPageState extends State<RegisterPage> {
                         } else {
                           Navigator.of(context).pushAndRemoveUntil(
                               MaterialPageRoute(
-                                builder: (context) => const HomePage(),
+                                builder: (context) => HomePage(),
                               ),
                               (route) => false);
                         }

@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:flutter/material.dart';
 import 'package:minimal_social_media/app/shared/private/back_4_app_headers.dart';
 import 'package:minimal_social_media/app/shared/validators/confirm_password_validator.dart';
 import 'package:minimal_social_media/app/shared/validators/email_validator.dart';
@@ -42,7 +43,7 @@ class Auth {
 
       return resultValidators;
     } catch (e) {
-      print('An error occurred during login: $e');
+      debugPrint('An error occurred during login: $e');
       return "Ocorreu um erro ao realizar o login";
     }
   }
@@ -93,7 +94,7 @@ class Auth {
 
       return resultValidators;
     } catch (e) {
-      print('An error occurred during registration: $e');
+      debugPrint('An error occurred during registration: $e');
       return "Ocorreu um erro ao realizar o cadastro";
     }
   }
