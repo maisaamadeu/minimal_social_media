@@ -1,18 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:minimal_social_media/app/pages/register_page.dart';
+import 'package:minimal_social_media/app/pages/sign_up_page.dart';
 import 'package:minimal_social_media/app/shared/controllers/auth_controller.dart';
 import 'package:minimal_social_media/app/shared/widgets/my_elevated_button.dart';
 import 'package:minimal_social_media/app/shared/widgets/my_text_form_field.dart';
 
-class LoginPage extends StatefulWidget {
-  const LoginPage({super.key});
+class SignInPage extends StatefulWidget {
+  const SignInPage({super.key});
 
   @override
-  State<LoginPage> createState() => _LoginPageState();
+  State<SignInPage> createState() => _SignInPageState();
 }
 
-class _LoginPageState extends State<LoginPage> {
+class _SignInPageState extends State<SignInPage> {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
 
@@ -104,7 +104,7 @@ class _LoginPageState extends State<LoginPage> {
                   GestureDetector(
                     onTap: () => Navigator.of(context).pushAndRemoveUntil(
                       MaterialPageRoute(
-                        builder: (context) => const RegisterPage(),
+                        builder: (context) => const SignUpPage(),
                       ),
                       (route) => false,
                     ),

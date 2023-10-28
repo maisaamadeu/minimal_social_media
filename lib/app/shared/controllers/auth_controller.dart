@@ -10,7 +10,7 @@ class AuthController extends GetxController {
 
   Future<void> login(
       {required BuildContext context, String? email, String? password}) async {
-    String? result = await _auth.login(
+    String? result = await _auth.signIn(
       email: email,
       password: password,
     );
@@ -31,7 +31,7 @@ class AuthController extends GetxController {
       String? email,
       String? password,
       String? confirmPassword}) async {
-    String? result = await _auth.register(
+    String? result = await _auth.signUp(
       username: username,
       email: email,
       password: password,

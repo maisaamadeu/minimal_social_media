@@ -15,7 +15,7 @@ class Auth {
 
   Auth({required this.dio});
 
-  Future<String?> login({String? email, String? password}) async {
+  Future<String?> signIn({String? email, String? password}) async {
     try {
       final String? emailError =
           await EmailValidator().validate(email: email, login: true);
@@ -64,7 +64,7 @@ class Auth {
     }
   }
 
-  Future<String?> register({
+  Future<String?> signUp({
     String? username,
     String? email,
     String? password,

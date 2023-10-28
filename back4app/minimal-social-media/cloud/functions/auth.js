@@ -14,6 +14,18 @@ Parse.Cloud.define('get-usernames', async (request) => {
     })
 });
 
+Parse.Cloud.define('get-users', async (request) => {
+    const queryUsers = new Parse.Query(User);
+    const resultUsers = await queryUsers.find({ useMasterKey: true });
+
+    return resultUsers.map(function (u) {
+        u = u.toJSON();
+
+        return formatUser(u);
+
+    })
+});
+
 Parse.Cloud.define('get-emails', async (request) => {
     const queryEmails = new Parse.Query(User);
     queryEmails.select('email');
@@ -60,6 +72,23 @@ Parse.Cloud.define("signin", async (request) => {
     } catch (error) {
         throw 'INVALID_CREDENTIALS';
     }
+});
+
+Parse.Cloud.define("signout", async (request) => {
+    try {
+        await Parse.User.logOut();
+        const currentUser = await Parse.User.current();
+
+        if (currentUser == null) {
+            return null;
+        } else {
+            return "Erro ao encerrar a sessão do usuário.";
+        }
+
+    } catch (error) {
+        throw "Erro ao encerrar a sessão do usuário: " + error.message;
+    }
+
 });
 
 

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:minimal_social_media/app/bindings/app_binding.dart';
-import 'package:minimal_social_media/app/pages/login_page.dart';
+import 'package:minimal_social_media/app/pages/sign_in_page.dart';
 import 'package:minimal_social_media/app/shared/controllers/theme_controller.dart';
 import 'package:minimal_social_media/app/shared/themes/dark_mode.dart';
 import 'package:minimal_social_media/app/shared/themes/light_mode.dart';
@@ -17,7 +17,7 @@ class AppWidget extends GetView<ThemeController> {
       () => GetMaterialApp(
         theme: themeController.lightMode.value ? lightMode : darkMode,
         initialBinding: AppBinding(),
-        home: LoginPage(),
+        home: SignInPage(),
       ),
     );
   }
