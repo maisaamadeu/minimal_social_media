@@ -1,10 +1,8 @@
-import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
-import 'package:minimal_social_media/app/pages/home_page.dart';
+import 'package:get/get.dart';
 import 'package:minimal_social_media/app/pages/login_page.dart';
-import 'package:minimal_social_media/app/shared/services/auth_service.dart';
+import 'package:minimal_social_media/app/shared/controllers/auth_controller.dart';
 import 'package:minimal_social_media/app/shared/widgets/my_elevated_button.dart';
-import 'package:minimal_social_media/app/shared/widgets/my_error_snack_bar.dart';
 import 'package:minimal_social_media/app/shared/widgets/my_text_form_field.dart';
 
 class RegisterPage extends StatefulWidget {
@@ -21,8 +19,6 @@ class _RegisterPageState extends State<RegisterPage> {
   final TextEditingController _confirmPasswordController =
       TextEditingController();
 
-  final Auth _auth = Auth(dio: Dio());
-
   @override
   void dispose() {
     _usernameController.dispose();
@@ -34,6 +30,7 @@ class _RegisterPageState extends State<RegisterPage> {
 
   @override
   Widget build(BuildContext context) {
+    AuthController authController = Get.put(AuthController());
     ColorScheme colorScheme = Theme.of(context).colorScheme;
     return Scaffold(
       body: SafeArea(
@@ -101,24 +98,13 @@ class _RegisterPageState extends State<RegisterPage> {
                   ),
                   MyElevatedButton(
                     onPressed: () async {
-                      String? result = await _auth.register(
+                      authController.register(
+                        context: context,
                         username: _usernameController.text,
                         email: _emailController.text,
                         password: _passwordController.text,
                         confirmPassword: _confirmPasswordController.text,
                       );
-
-                      if (context.mounted) {
-                        if (result != null) {
-                          myErrorSnackBar(context, result);
-                        } else {
-                          Navigator.of(context).pushAndRemoveUntil(
-                              MaterialPageRoute(
-                                builder: (context) => HomePage(),
-                              ),
-                              (route) => false);
-                        }
-                      }
                     },
                     backgroundColor: colorScheme.primary,
                     text: 'Cadastrar',

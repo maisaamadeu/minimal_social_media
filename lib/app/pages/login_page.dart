@@ -1,10 +1,8 @@
-import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
-import 'package:minimal_social_media/app/pages/home_page.dart';
+import 'package:get/get.dart';
 import 'package:minimal_social_media/app/pages/register_page.dart';
-import 'package:minimal_social_media/app/shared/services/auth_service.dart';
+import 'package:minimal_social_media/app/shared/controllers/auth_controller.dart';
 import 'package:minimal_social_media/app/shared/widgets/my_elevated_button.dart';
-import 'package:minimal_social_media/app/shared/widgets/my_error_snack_bar.dart';
 import 'package:minimal_social_media/app/shared/widgets/my_text_form_field.dart';
 
 class LoginPage extends StatefulWidget {
@@ -18,8 +16,6 @@ class _LoginPageState extends State<LoginPage> {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
 
-  final Auth _auth = Auth(dio: Dio());
-
   @override
   void dispose() {
     _emailController.dispose();
@@ -29,113 +25,107 @@ class _LoginPageState extends State<LoginPage> {
 
   @override
   Widget build(BuildContext context) {
+    AuthController authController = Get.put(AuthController());
     ColorScheme colorScheme = Theme.of(context).colorScheme;
     return Scaffold(
       body: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(
-            horizontal: 25,
-          ),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              Icon(
-                Icons.person,
-                color: colorScheme.inversePrimary,
-                size: 80,
+        child: Center(
+          child: SingleChildScrollView(
+            child: Padding(
+              padding: const EdgeInsets.symmetric(
+                horizontal: 25,
               ),
-              const SizedBox(
-                height: 25,
-              ),
-              Text(
-                'MINIMALISTA',
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                  color: colorScheme.inversePrimary,
-                  fontSize: 20,
-                  letterSpacing: 5,
-                ),
-              ),
-              const SizedBox(
-                height: 50,
-              ),
-              MyTextFormField(
-                controller: _emailController,
-                hintText: 'Email',
-                obscureText: false,
-                keyboardType: TextInputType.emailAddress,
-              ),
-              const SizedBox(
-                height: 10,
-              ),
-              MyTextFormField(
-                controller: _passwordController,
-                hintText: 'Senha',
-                obscureText: true,
-              ),
-              const SizedBox(
-                height: 10,
-              ),
-              Text(
-                'Esqueceu a senha?',
-                style: TextStyle(
-                  color: colorScheme.secondary,
-                ),
-                textAlign: TextAlign.end,
-              ),
-              const SizedBox(
-                height: 25,
-              ),
-              MyElevatedButton(
-                onPressed: () async {
-                  String? result = await _auth.login(
-                    email: _emailController.text,
-                    password: _passwordController.text,
-                  );
-
-                  if (context.mounted) {
-                    if (result != null) {
-                      myErrorSnackBar(context, result);
-                    } else {
-                      Navigator.of(context).pushAndRemoveUntil(
-                          MaterialPageRoute(
-                            builder: (context) => HomePage(),
-                          ),
-                          (route) => false);
-                    }
-                  }
-                },
-                backgroundColor: colorScheme.primary,
-                text: 'Entrar',
-                colorText: colorScheme.inversePrimary,
-              ),
-              const SizedBox(
-                height: 25,
-              ),
-              GestureDetector(
-                onTap: () => Navigator.of(context).pushAndRemoveUntil(
-                  MaterialPageRoute(
-                    builder: (context) => const RegisterPage(),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  Icon(
+                    Icons.person,
+                    color: colorScheme.inversePrimary,
+                    size: 80,
                   ),
-                  (route) => false,
-                ),
-                child: const Text.rich(
-                  TextSpan(
-                    text: 'Não possui uma conta? ',
-                    children: [
-                      TextSpan(
-                        text: 'Crie uma aqui',
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                        ),
+                  const SizedBox(
+                    height: 25,
+                  ),
+                  Text(
+                    'MINIMALISTA',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      color: colorScheme.inversePrimary,
+                      fontSize: 20,
+                      letterSpacing: 5,
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 50,
+                  ),
+                  MyTextFormField(
+                    controller: _emailController,
+                    hintText: 'Email',
+                    obscureText: false,
+                    keyboardType: TextInputType.emailAddress,
+                  ),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  MyTextFormField(
+                    controller: _passwordController,
+                    hintText: 'Senha',
+                    obscureText: true,
+                  ),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  Text(
+                    'Esqueceu a senha?',
+                    style: TextStyle(
+                      color: colorScheme.secondary,
+                    ),
+                    textAlign: TextAlign.end,
+                  ),
+                  const SizedBox(
+                    height: 25,
+                  ),
+                  MyElevatedButton(
+                    onPressed: () async {
+                      authController.login(
+                        context: context,
+                        email: _emailController.text,
+                        password: _passwordController.text,
+                      );
+                    },
+                    backgroundColor: colorScheme.primary,
+                    text: 'Entrar',
+                    colorText: colorScheme.inversePrimary,
+                  ),
+                  const SizedBox(
+                    height: 25,
+                  ),
+                  GestureDetector(
+                    onTap: () => Navigator.of(context).pushAndRemoveUntil(
+                      MaterialPageRoute(
+                        builder: (context) => const RegisterPage(),
                       ),
-                    ],
+                      (route) => false,
+                    ),
+                    child: const Text.rich(
+                      TextSpan(
+                        text: 'Não possui uma conta? ',
+                        children: [
+                          TextSpan(
+                            text: 'Crie uma aqui',
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ],
+                      ),
+                      textAlign: TextAlign.center,
+                    ),
                   ),
-                  textAlign: TextAlign.center,
-                ),
+                ],
               ),
-            ],
+            ),
           ),
         ),
       ),

@@ -6,7 +6,7 @@ import 'package:minimal_social_media/app/shared/controllers/theme_controller.dar
 import 'package:minimal_social_media/app/shared/themes/dark_mode.dart';
 import 'package:minimal_social_media/app/shared/themes/light_mode.dart';
 
-class AppWidget extends StatelessWidget {
+class AppWidget extends GetView<ThemeController> {
   AppWidget({super.key});
 
   final themeController = Get.put(ThemeController());
@@ -17,7 +17,7 @@ class AppWidget extends StatelessWidget {
       () => GetMaterialApp(
         theme: themeController.lightMode.value ? lightMode : darkMode,
         initialBinding: AppBinding(),
-        home: const LoginPage(),
+        home: LoginPage(),
       ),
     );
   }
