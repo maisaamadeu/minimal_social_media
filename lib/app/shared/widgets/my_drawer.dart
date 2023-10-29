@@ -75,7 +75,7 @@ class MyDrawer extends StatelessWidget {
                 ),
                 onTap: () {
                   Navigator.pop(context);
-                  Get.to(() => const UsersPage());
+                  Get.to(() => UsersPage());
                 },
               ),
             ],

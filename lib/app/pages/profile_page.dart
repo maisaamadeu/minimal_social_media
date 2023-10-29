@@ -24,34 +24,34 @@ class ProfilePage extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Row(),
+            const Row(),
             Container(
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(24),
                 color: Theme.of(context).colorScheme.primary,
               ),
-              padding: EdgeInsets.all(25),
-              child: Icon(
+              padding: const EdgeInsets.all(25),
+              child: const Icon(
                 Icons.person,
                 size: 64,
               ),
             ),
-            SizedBox(
+            const SizedBox(
               height: 25,
             ),
             Text(
               userController.user.value?.username ?? "Sem nome de perfil",
-              style: TextStyle(
+              style: const TextStyle(
                 fontSize: 24,
                 fontWeight: FontWeight.bold,
               ),
             ),
-            SizedBox(
+            const SizedBox(
               height: 10,
             ),
             Text(
               userController.user.value?.email ?? "Sem endereço de e-mail",
-              style: TextStyle(color: Colors.grey),
+              style: const TextStyle(color: Colors.grey),
             ),
           ],
         ),

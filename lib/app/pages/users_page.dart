@@ -1,26 +1,13 @@
-import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
-import 'package:minimal_social_media/app/shared/repositories/users_repository.dart';
+import 'package:get/get.dart';
+import 'package:minimal_social_media/app/shared/controllers/users_controller.dart';
+import 'package:minimal_social_media/app/shared/models/user_model.dart';
 
-class UsersPage extends StatefulWidget {
-  const UsersPage({super.key});
+class UsersPage extends StatelessWidget {
+  UsersPage({super.key});
 
-  @override
-  State<UsersPage> createState() => _UsersPageState();
-}
-
-class _UsersPageState extends State<UsersPage> {
-  List<dynamic> users = [];
-
-  @override
-  void initState() {
-    super.initState();
-    getUsers();
-  }
-
-  void getUsers() async {
-    users = await UsersRepository(dio: Dio()).getUsers() ?? [];
-  }
+  final UsersController usersController =
+      Get.put<UsersController>(UsersController());
 
   @override
   Widget build(BuildContext context) {
@@ -34,15 +21,45 @@ class _UsersPageState extends State<UsersPage> {
           color: Theme.of(context).colorScheme.inversePrimary,
         ),
       ),
-      body: Center(
-        child: ElevatedButton(
-            onPressed: () async {
-              var result = await UsersRepository(dio: Dio()).getUsers();
-              for (var user in result ?? []) {
-                print(user['id']);
-              }
-            },
-            child: Text('Teste')),
+      backgroundColor: Theme.of(context).colorScheme.background,
+      body: Obx(
+        () {
+          if (usersController.isLoading.value) {
+            return Center(
+              child: CircularProgressIndicator(
+                color: Theme.of(context).colorScheme.inversePrimary,
+              ),
+            );
+          } else if (usersController.users.isEmpty) {
+            return Center(
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 25),
+                child: Text(
+                  'Ocorreu um erro ao buscar os dados dos usários, tente novamente mais tarde',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    color: Theme.of(context).colorScheme.inversePrimary,
+                    fontSize: 22,
+                  ),
+                ),
+              ),
+            );
+          } else {
+            return ListView.builder(
+              padding: const EdgeInsets.symmetric(horizontal: 25),
+              itemBuilder: (context, index) {
+                final UserModel user = usersController.users[index];
+
+                return ListTile(
+                  title: Text(user.username),
+                  subtitle: Text(user.email),
+                );
+              },
+              // separatorBuilder: (context, index) => Divider(),
+              itemCount: usersController.users.length,
+            );
+          }
+        },
       ),
     );
   }

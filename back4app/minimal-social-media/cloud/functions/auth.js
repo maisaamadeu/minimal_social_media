@@ -1,45 +1,5 @@
 const User = Parse.Object.extend('User');
 
-Parse.Cloud.define('get-usernames', async (request) => {
-    const queryUsernames = new Parse.Query(User);
-    queryUsernames.select('username');
-    const resultUsernames = await queryUsernames.find({ useMasterKey: true });
-
-    return resultUsernames.map(function (u) {
-        u = u.toJSON();
-
-        return {
-            username: u.username
-        }
-    })
-});
-
-Parse.Cloud.define('get-users', async (request) => {
-    const queryUsers = new Parse.Query(User);
-    const resultUsers = await queryUsers.find({ useMasterKey: true });
-
-    return resultUsers.map(function (u) {
-        u = u.toJSON();
-
-        return formatUser(u);
-
-    })
-});
-
-Parse.Cloud.define('get-emails', async (request) => {
-    const queryEmails = new Parse.Query(User);
-    queryEmails.select('email');
-    const resultEmails = await queryEmails.find({ useMasterKey: true });
-
-    return resultEmails.map(function (e) {
-        e = e.toJSON();
-
-        return {
-            email: e.email
-        }
-    })
-});
-
 Parse.Cloud.define("signup", async (request) => {
     if (request.params.username == null) throw "Por favor insira um nome de usuário válido";
     if (request.params.email == null) throw "Por favor insira um endereço de email válido";

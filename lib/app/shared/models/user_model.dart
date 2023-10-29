@@ -2,9 +2,13 @@ class UserModel {
   late String id;
   late String username;
   late String email;
-  late String token;
+  late String? token;
 
-  UserModel({required this.id, required this.username, required this.email, required this.token});
+  UserModel(
+      {required this.id,
+      required this.username,
+      required this.email,
+      required this.token});
 
   UserModel.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -22,4 +26,3 @@ class UserModel {
     return _data;
   }
 }
-

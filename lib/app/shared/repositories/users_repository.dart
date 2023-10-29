@@ -15,6 +15,10 @@ class UsersRepository {
           'X-Parse-Application-Id': Back4AppHeaders().xParseApplicationId,
           'X-Parse-REST-API-Key': Back4AppHeaders().xParseRestApiKey,
         },
+        followRedirects: false,
+        validateStatus: (status) {
+          return status! < 500;
+        },
       ),
     );
 
